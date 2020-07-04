@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="text-center container">
+
+<form class="form-signin" style="margin: auto; width: 600px" method="post">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="/">
+  <img class="mb-4" src="{% static '/logo.svg' %}" alt="" width="72" height="72">
+
+  <h1 class="h3 mb-3 font-weight-normal">Вход</h1>
+
+  <label for="inputUsername" class="sr-only">Email</label>
+  <input type="username" id="inputUsername" class="form-control" placeholder="Username" name="username"
+         value="" required="" autofocus="" data-cip-id="inputUsername">
+
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" id="inputPassword" class="form-control" placeholder="Пароль"
+         name="password" required="" data-cip-id="inputPassword">
+
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+  <p class="mt-5 mb-3 text-muted">© Просто магазин 2018</p>
+</form>
+</div>
+{% endblock %}
+
