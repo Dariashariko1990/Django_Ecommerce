@@ -53,10 +53,13 @@
        href="/cart/">
       Корзина</a>
 
-
-      <a class="btn btn-outline-success my-2 my-sm-0" role="button"
-       href="/accounts/login/">
-      Войти</a>
+      {% if request.user.is_authenticated %}
+        <a class="btn btn-outline-success my-2 my-sm-0" role="button"
+         href="/accounts/login/">Выйти</a>
+      {% else %}
+         <a class="btn btn-outline-success my-2 my-sm-0" role="button"
+         href="/accounts/login/">Войти</a>
+      {% endif %}
 
     </div>
   </nav>
