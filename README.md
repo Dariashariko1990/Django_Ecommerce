@@ -43,10 +43,10 @@
 * Страница детализации заказа с просмотром списка заказанных товаров.
 
 
-* [Главная страница](./resources/index.html).
-* [Страница раздела](./resources/smartphones.html).
-* [Страница незаполненного раздела](./resources/empty_section.html).
-* [Страница товара](./resources/phone.html).
-* [Страница корзины](./resources/cart.html).
-* [Страница входа](./resources/login.html).
+[Главная страница](./resources/index.html).
+[Страница раздела](./resources/smartphones.html).
+[Страница незаполненного раздела](./resources/empty_section.html).
+[Страница товара](./resources/phone.html).
+[Страница корзины](./resources/cart.html).
+[Страница входа](./resources/login.html).
 
