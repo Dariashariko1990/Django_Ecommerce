@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="text-center container">
+    <img class="mb-4" src="{% static '/logo.svg' %}" alt="" width="72" height="72">
+
+    <h1 class="h3 mb-3 font-weight-normal">Вы успешно вышли</h1>
+    <p>Спасибо за уделенное время!</p>
+    <a class="btn btn-lg btn-primary btn-block" role="button" style="margin: auto; width: 600px"
+         href="/accounts/login/">Войти заново</a>
+</div>
+
+{% endblock %}

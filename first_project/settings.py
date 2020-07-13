@@ -31,8 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -40,7 +38,9 @@ INSTALLED_APPS = [
 
     # здесь мы подключаем наши приложения
     'app',
-    'users'
+    'users',
+    'django.contrib.auth',
+    'django.contrib.admin',
 ]
 
 MIDDLEWARE = [

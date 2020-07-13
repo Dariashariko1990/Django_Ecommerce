@@ -37,8 +37,8 @@ def category_view(request, slug):
     paginator = Paginator(category_products, 3)
     current_page = request.GET.get('page', 1)
     products = paginator.get_page(current_page)
-    url = '/catalog/'+category.slug
-    print(url)
+    url = '/catalog/'+ slug
+    print(slug, url)
 
     prev_page, next_page = None, None
     prev_page_url, next_page_url = None, None

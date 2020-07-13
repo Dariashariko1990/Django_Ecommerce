@@ -1,9 +1,11 @@
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.db import models
+from pytils.translit import slugify
 
 
 # STORAGE = FileSystemStorage(location=settings.STATIC_ROOT)
+#from django.utils.text import slugify
 
 
 class Product(models.Model):
@@ -24,7 +26,11 @@ class Product(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=50, verbose_name='Категория', blank=False, null=False)
     products = models.ManyToManyField(Product, blank=True, related_name='category')
-    slug = models.CharField(max_length=100)
+    slug = models.SlugField(blank=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        return super(Category, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Категория'
@@ -38,7 +44,11 @@ class Subcategory(models.Model):
     name = models.CharField(max_length=50, verbose_name='Подкатегория', blank=False, null=False)
     products = models.ManyToManyField(Product, blank=True, related_name='subcategory')
     category = models.ForeignKey(Category, on_delete='SET_NULL', related_name='subcategory')
-    slug = models.CharField(max_length=100)
+    slug = models.SlugField(blank=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        return super(Subcategory, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Подкатегория'
