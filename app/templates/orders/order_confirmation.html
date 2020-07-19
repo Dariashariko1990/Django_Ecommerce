@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="text-center container">
+    <img class="mb-4" src="{% static '/logo.svg' %}" alt="" width="72" height="72">
+
+    <h1 class="h3 mb-3 font-weight-normal">Ваш заказ успешно создан!</h1>
+    <p>Номер заказа: {{order}}</p>
+</div>
+{% endblock %}

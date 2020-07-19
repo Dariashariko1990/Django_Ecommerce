@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Category, Article, Subcategory
+from .models import Product, Category, Article, Subcategory, Review
 
 
 class CategoryInline(admin.TabularInline):
@@ -41,6 +41,12 @@ class SubcategoryAdmin(admin.ModelAdmin):
     fields = ('name', 'slug', 'category')
     list_display = ('id', 'name')
     inlines = [SubcategoryInline]
+
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'product')
+
 
 
 #admin.site.register(Product, ProductAdmin)

@@ -19,21 +19,19 @@ from django.contrib import admin, auth
 from django.urls import path, include
 from django.conf.urls.static import static
 
-from app.views import index_view, category_view, product_view, cart_view
+from app.views import index_view, category_view, product_view
 
 urlpatterns = [
     path('', index_view, name='index'),
-    path('cart/', cart_view, name='cart'),
     path('catalog/<slug:slug>/', category_view, name='category'),
     path('product/<int:pk>/', product_view, name='product'),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-#static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-#static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 urlpatterns += [
     url(r'^accounts/', include('django.contrib.auth.urls')),
-    #url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
-    #url(r'^logout/$', 'django.contrib.auth.views.logout', name='logout'),
+    url(r'^cart/', include(('cart.urls', 'app_name'), namespace='cart')),
+    url(r'^orders/', include(('orders.urls', 'app_name'), namespace='orders')),
 ]
 

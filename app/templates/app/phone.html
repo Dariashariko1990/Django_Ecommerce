@@ -13,31 +13,37 @@
         <img src="{{product.img.url}}" width="120">
 
         <p>{{ product.description }}</p>
-        <form method="post" action="./cart/">
-          <input type="hidden" name="csrfmiddlewaretoken"
-                 value="N4vcBqzjoYkU7OTDuAT8hq8srpvYX44nJsswuP7e3EYg0Hq8DgxuR0eiXWbSr5RZ">
-          <input type="hidden" name="merchandise_id" value="1">
+        <form action="{% url "cart:cart_add" product.id %}" method="post">
+          {{ cart_product_form }}
+          {% csrf_token %}
           <input type="submit" class="btn btn-secondary" value="Добавить в корзину »">
         </form>
       </div>
     </div>
     <hr>
-
-    ★★★★★ <span>Вася</span>
-    <p> Хороший отзыв</p>
-
-    ★★ <span>Петя</span>
-    <p> Плохой отзыв</p>
-
+    {% for review in reviews %}
+      {% if review.mark == '1' %}
+        ★ <span>{{ review.name }}</span>
+      {% elif review.mark == '2' %}
+        ★★ <span>{{ review.name }}</span>
+      {% elif review.mark == '3' %}
+        ★★★ <span>{{ review.name }}</span>
+      {% elif review.mark == '4' %}
+        ★★★★ <span>{{ review.name }}</span>
+      {% else %}
+      ★★★★★ <span>{{ review.name }}</span>
+      {% endif %}
+      <p>{{ review.content }}</p>
+    {% endfor %}
     <hr>
 
     <div class="row">
       <div class="col-lg-6 col-md-8 col-sm-12">
         <h4>Оставте отзыв:</h4>
 
-        <form action="./merch/1/feedback" method="post">
-          <input type="hidden" name="csrfmiddlewaretoken"
-                 value="N4vcBqzjoYkU7OTDuAT8hq8srpvYX44nJsswuP7e3EYg0Hq8DgxuR0eiXWbSr5RZ">
+        <form action="{% url 'product' product.id %}" method="POST">
+          {% csrf_token %}
+
           <div class="form-group">
             <label for="name">Имя</label>
             <input type="text" class="form-control" id="name" aria-describedby="nameHelp"
@@ -46,7 +52,7 @@
           <div class="form-group">
             <label for="content">Содержание</label>
             <textarea class="form-control" id="content" placeholder="Содержание"
-                      name="description"></textarea>
+                      name="content"></textarea>
           </div>
 
           <div class="form-check">

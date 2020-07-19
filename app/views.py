@@ -2,23 +2,19 @@ import urllib
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
-from django.http import HttpResponse
-from django.shortcuts import render, reverse, get_object_or_404, render_to_response
-from datetime import datetime
-import os, sys
+from django.shortcuts import render, get_object_or_404
 
-from app.models import Product, Category, Article, Subcategory
+from app.forms import ReviewForm
+from app.models import Product, Category, Article, Subcategory, Review
 
 
 def index_view(request):
     template_name = 'app/index.html'
     products = Product.objects.all()
-    categories = Category.objects.all().prefetch_related('subcategory')
     articles = Article.objects.all().prefetch_related('products').order_by('date')
 
     context = {
         'product_list': products,
-        'categories': categories,
         'articles': articles,
     }
     return render(request, template_name, context)
@@ -32,13 +28,11 @@ def category_view(request, slug):
         category = Subcategory.objects.get(slug__exact=slug)
 
     category_products = category.products.all()
-    categories = Category.objects.all()
 
     paginator = Paginator(category_products, 3)
     current_page = request.GET.get('page', 1)
     products = paginator.get_page(current_page)
-    url = '/catalog/'+ slug
-    print(slug, url)
+    url = '/catalog/' + slug
 
     prev_page, next_page = None, None
     prev_page_url, next_page_url = None, None
@@ -58,30 +52,30 @@ def category_view(request, slug):
         url_page = urllib.parse.urlencode(np)
         next_page_url = url + '?' + url_page
 
-    return render_to_response(template_name, context={
+    return render(request, template_name, context={
+        'category': category,
         'category_products': products,
-        'categories': categories,
         'current_page': current_page,
         'prev_page_url': prev_page_url,
         'next_page_url': next_page_url,
     })
 
 
-def cart_view(request):
-    template_name = 'app/cart.html'
-
-    context = {
-    }
-    return render(request, template_name, context)
-
-
 def product_view(request, pk):
     template_name = 'app/phone.html'
     product = get_object_or_404(Product, id=pk)
-    categories = Category.objects.all()
+    reviews = Review.objects.filter(product=product.id)
 
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            Review.objects.create(mark=cleaned_data['mark'], name=cleaned_data['name'], content=cleaned_data['content'], product=product)
+        else:
+            print(form.errors)
     context = {
-        'categories': categories,
+        'form': ReviewForm,
+        'reviews': reviews,
         'product': product,
     }
     return render(request, template_name, context)

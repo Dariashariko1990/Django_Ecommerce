@@ -38,7 +38,9 @@ INSTALLED_APPS = [
 
     # здесь мы подключаем наши приложения
     'app',
+    'cart',
     'users',
+    'orders',
     'django.contrib.auth',
     'django.contrib.admin',
 ]
@@ -59,6 +61,8 @@ AUTHENTICATION_BACKENDS = (
 
 AUTH_USER_MODEL = "users.User"
 
+CART_SESSION_ID = 'cart'
+
 ROOT_URLCONF = 'first_project.urls'
 
 TEMPLATES = [
@@ -72,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'app.context_processors.categories',
             ],
         },
     },
